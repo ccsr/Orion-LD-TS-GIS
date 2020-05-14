@@ -11,7 +11,9 @@
 
 void OldPg_Closeconnection(PGconn* conn)
 {
+    puts("here we are 100");
     PQfinish(conn);
+    puts("here we are 101");
 }
 
 

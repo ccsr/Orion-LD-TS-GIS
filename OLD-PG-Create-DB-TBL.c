@@ -27,14 +27,14 @@ void OldPg_CreateDB(char *oldTenantName,char *pgDbName)
     puts("here we are - 1");
     printf("%s\n",oldTenantName);
 
-    char* oldPgDbConnCheckSql = "user=postgres dbname=postgres";
+    char* oldPgDbConnCheckSql = "user=postgres password=orion dbname=postgres";
 
     puts("here we are - 1.1");
 
     //strcat (oldPgDbConnCheckSql, "oldTenantName");
     //strcat (oldPgDbConnCheckSql, pgDbName);
 
-    char oldPgDbSql[30] = "CREATE DATABASE ";   //This HARDCODED
+    char oldPgDbSql[50] = "CREATE DATABASE ";   //This HARDCODED
     char *oldPgDbSqlSyntax = ";";
 
     puts("here we are - 1.1");
@@ -51,7 +51,7 @@ void OldPg_CreateDB(char *oldTenantName,char *pgDbName)
     PGresult* oldPgRes;
 
     puts("here we are - 3");
-    char oldPgDbSqlExec[40] = "user=postgres dbname=";
+    char oldPgDbSqlExec[40] = "user=postgres password=orion dbname=";
     strcat (oldPgDbSqlExec, oldTenantName);
 
     if(oldPgConn != NULL)
@@ -66,16 +66,13 @@ void OldPg_CreateDB(char *oldTenantName,char *pgDbName)
         }
         else
         {
-	    puts("here we are - 3.2");
+	          puts("here we are - 3.2");
             OldPg_CreateDB_Objects(oldTenantName);
+            puts("here we are - 3.3");
         }
-
         puts("here we are - 4");
-
         PQclear(oldPgRes);
-
         puts("here we are - 5");
-
         OldPg_Closeconnection(oldPgConn);
         puts("here we are - 6");
     }
@@ -91,11 +88,10 @@ void OldPg_CreateDB_Objects(char* oldPgDbSql)
     oldPgDbObjsql[2] = "CREATE EXTENSION IF NOT EXISTS timescaledb CASCADE";
     oldPgDbObjsql[3] = "CREATE TABLE IF NOT EXISTS attributes_table (entity_id TEXT NOT NULL REFERENCES entity_table(entity_id),attribute_id TEXT NOT NULL,attribute_type TEXT,attribute_value TEXT, geo_property GEOMETRY,time TIMESTAMP,PRIMARY KEY (entity_id,attribute_id,time))";
 
-
     puts("here we are 8");
     printf("Database name with tenant is %s\n",oldPgDbSql);
 
-    char oldPgDbSqlExec[40] = "user=postgres dbname=";
+    char oldPgDbSqlExec[50] = "user=postgres password=orion dbname=";
     strcat (oldPgDbSqlExec, oldPgDbSql);
 
     printf("The exec statement is %s\n",oldPgDbSqlExec);
@@ -110,6 +106,7 @@ void OldPg_CreateDB_Objects(char* oldPgDbSql)
     {
         for(int oldPgDbNumObj = 0; oldPgDbNumObj < 4; oldPgDbNumObj++)
         {
+            puts("here we are 9.0");
             oldPgRes = PQexec(oldPgConn, oldPgDbObjsql[oldPgDbNumObj]);
 
             puts("here we are 9.1");
@@ -123,7 +120,8 @@ void OldPg_CreateDB_Objects(char* oldPgDbSql)
 
             PQclear(oldPgRes);
         }
-
-        OldPg_Closeconnection(oldPgConn);
+        puts("here we are 10");
     }
+    OldPg_Closeconnection(oldPgConn);
+    puts("here we are 11");
 }
