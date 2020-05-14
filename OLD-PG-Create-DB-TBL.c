@@ -6,7 +6,7 @@
 //  Copyright © 2020 CHANDRA CHALLAGONDA. All rights reserved.
 //
 
-#include <libpq-fe.h>
+#include </usr/include/postgresql/libpq-fe.h>
 #include "OLD-PG-Create-DB-TBL.h"
 #include "OLD-PG-Conn.h"
 
@@ -19,21 +19,21 @@ void OldPg_CreateDB(char *oldTenantName,char *pgDbName)
         oldTenantName = "orion_ld";
 	printf("printing the value of oldTenantName %s",oldTenantName);
     }
-    
+
     if (pgDbName == NULL) {
         pgDbName = "postgres";
     }
 
     puts("here we are - 1");
     printf("%s\n",oldTenantName);
-    
+
     char* oldPgDbConnCheckSql = "user=postgres dbname=postgres";
-   
+
     puts("here we are - 1.1");
-	    
+
     //strcat (oldPgDbConnCheckSql, "oldTenantName");
     //strcat (oldPgDbConnCheckSql, pgDbName);
-    
+
     char oldPgDbSql[30] = "CREATE DATABASE ";   //This HARDCODED
     char *oldPgDbSqlSyntax = ";";
 
@@ -45,11 +45,11 @@ void OldPg_CreateDB(char *oldTenantName,char *pgDbName)
     printf("Full sentence of tenand database command is %s\n",oldPgDbSql);
 
     puts("here we are - 2");
-    
+
     PGconn* oldPgConn = OldPg_OpenConnection(oldPgDbConnCheckSql);
 
     PGresult* oldPgRes;
-    
+
     puts("here we are - 3");
     char oldPgDbSqlExec[40] = "user=postgres dbname=";
     strcat (oldPgDbSqlExec, oldTenantName);
@@ -71,9 +71,9 @@ void OldPg_CreateDB(char *oldTenantName,char *pgDbName)
         }
 
         puts("here we are - 4");
-        
+
         PQclear(oldPgRes);
-        
+
         puts("here we are - 5");
 
         OldPg_Closeconnection(oldPgConn);
@@ -90,7 +90,7 @@ void OldPg_CreateDB_Objects(char* oldPgDbSql)
     oldPgDbObjsql[1] = "CREATE TABLE IF NOT EXISTS entity_table (entity_id TEXT NOT NULL,entity_type TEXT,createdAt TIMESTAMP,modifiedAt TIMESTAMP,PRIMARY KEY (entity_id))";
     oldPgDbObjsql[2] = "CREATE EXTENSION IF NOT EXISTS timescaledb CASCADE";
     oldPgDbObjsql[3] = "CREATE TABLE IF NOT EXISTS attributes_table (entity_id TEXT NOT NULL REFERENCES entity_table(entity_id),attribute_id TEXT NOT NULL,attribute_type TEXT,attribute_value TEXT, geo_property GEOMETRY,time TIMESTAMP,PRIMARY KEY (entity_id,attribute_id,time))";
-   
+
 
     puts("here we are 8");
     printf("Database name with tenant is %s\n",oldPgDbSql);

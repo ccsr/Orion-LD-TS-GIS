@@ -10,7 +10,7 @@
 #define OLD_PG_Create_DB_TBL_h
 
 #include<string.h>
-#include<libpq-fe.h>
+#include</usr/include/postgresql/libpq-fe.h>
 
 void OldPg_CreateDB(char* oldTenantName,char* pgDbName);
 void OldPg_CreateDB_Objects(char* oldPgDbSql);

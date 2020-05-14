@@ -10,7 +10,7 @@
 #define Header_h
 
 #include<string.h>
-#include<libpq-fe.h>
+#include</usr/include/postgresql/libpq-fe.h>
 
 
 PGconn* OldPg_OpenConnection(char* oldPgConnString);

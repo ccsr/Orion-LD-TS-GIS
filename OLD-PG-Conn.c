@@ -6,7 +6,7 @@
 //  Copyright © 2020 CHANDRA CHALLAGONDA. All rights reserved.
 //
 
-#include <libpq-fe.h>
+#include </usr/include/postgresql/libpq-fe.h>
 #include "OLD-PG-Conn.h"
 
 void OldPg_Closeconnection(PGconn* conn)
